@@ -33,30 +33,31 @@
       color: #333;
     }
 
-    .score-container, .timer-container, .leaderboard, .jackpot {
+    .instructions {
       margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+      line-height: 1.5;
     }
 
-    #score {
-      font-size: 24px;
-      color: #4CAF50;
+    .address {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FF5722;
+      margin-top: 10px;
+      word-break: break-word;
     }
 
-    #timer {
-      font-size: 30px;
-      color: #FF0000;
-    }
-
-    .deposit-section {
+    .footer {
       margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-size: 14px;
+      color: #777;
     }
 
-    .deposit-button {
+    .start-button {
+      margin-top: 20px;
       padding: 10px 20px;
-      background-color: #FFC107;
+      background-color: #4CAF50;
       border: none;
       border-radius: 5px;
       color: white;
@@ -65,39 +66,8 @@
       transition: background-color 0.3s ease;
     }
 
-    .deposit-button:hover {
-      background-color: #FF9800;
-    }
-
-    .leaderboard {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      font-size: 18px;
-    }
-
-    .leaderboard div {
-      padding: 10px;
-      background-color: #f1f1f1;
-      border-radius: 5px;
-      text-align: left;
-    }
-
-    .jackpot {
-      font-size: 24px;
-      color: #FF5722;
-    }
-
-    .leaderboard-title {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    .footer {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #777;
+    .start-button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
@@ -105,96 +75,25 @@
 
   <div class="container">
     <h1>PonziTate Clicker</h1>
-    
-    <div class="score-container">
-      <div id="score">Score: 0</div>
+
+    <div class="instructions">
+      Deposit <strong>1 SOL</strong> to the address below to start the game:
+      <div class="address" id="depositAddress">72iww5xDyoGRkT9WKohDwWLgr7SADazYXf3d9WhfGsJo</div>
     </div>
 
-    <div class="timer-container">
-      <div id="timer">Time Left: 30s</div>
-    </div>
-
-    <div class="deposit-section">
-      <button class="deposit-button" id="depositButton">Deposit 1 SOL</button>
-    </div>
-
-    <div class="leaderboard">
-      <div class="leaderboard-title">Top Clickers</div>
-      <div>1. User123 - 100 clicks</div>
-      <div>2. User456 - 90 clicks</div>
-      <div>3. User789 - 80 clicks</div>
-      <div>4. User101 - 70 clicks</div>
-    </div>
-
-    <div class="jackpot">
-      <div>Ponzi Jackpot: 100 SOL</div>
-    </div>
+    <button class="start-button" onclick="startGame()">Start Game</button>
 
     <div class="footer">
-      <p>Game starts once you deposit. Good luck!</p>
+      <p>Note: Ensure you send exactly 1 SOL to participate. Happy clicking!</p>
     </div>
-    
-    <a href="tate.html" class="deposit-button">Start Popcat Game</a>
-
   </div>
 
   <script>
-    let score = 0;
-    let timeLeft = 30;
-    let isGameActive = false;
-    let timerInterval;
-
-    const scoreElement = document.getElementById('score');
-    const timerElement = document.getElementById('timer');
-    const depositButton = document.getElementById('depositButton');
-
-    const updateTimer = () => {
-      if (timeLeft > 0 && isGameActive) {
-        timeLeft--;
-        timerElement.textContent = `Time Left: ${timeLeft}s`;
-      } else if (timeLeft === 0 && isGameActive) {
-        // Rug the game
-        isGameActive = false;
-        timerElement.textContent = `Game Over!`;
-        alert('The game has been Rugged!');
-        resetGame();
-      }
-    };
-
-    const handleClick = () => {
-      if (isGameActive) {
-        score++;
-        scoreElement.textContent = `Score: ${score}`;
-        // Reset timer on click
-        timeLeft = 30;
-        timerElement.textContent = `Time Left: 30s`;
-      }
-    };
-
     const startGame = () => {
-      score = 0;
-      timeLeft = 30;
-      scoreElement.textContent = `Score: ${score}`;
-      timerElement.textContent = `Time Left: 30s`;
-      isGameActive = true;
-      if (timerInterval) clearInterval(timerInterval);  // Clear any previous timer
-      timerInterval = setInterval(updateTimer, 1000);
+      alert('Please confirm you have deposited 1 SOL to start the game.');
+      // Redirect to the actual game page (if applicable)
+      window.location.href = 'tate.html'; // Change to your actual game URL
     };
-
-    const resetGame = () => {
-      score = 0;
-      timeLeft = 30;
-      scoreElement.textContent = `Score: ${score}`;
-      timerElement.textContent = `Time Left: 30s`;
-      depositButton.disabled = false;
-      depositButton.textContent = 'Deposit 1 SOL';
-    };
-
-    depositButton.addEventListener('click', () => {
-      startGame();
-      depositButton.disabled = true;  // Disable button after the first deposit
-      depositButton.textContent = 'Game Started - Good Luck!';
-    });
   </script>
 
 </body>
