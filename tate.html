@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popcat Game</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f1f1f1;
+      font-family: Arial, sans-serif;
+    }
+
+    #popcat-container {
+      text-align: center;
+    }
+
+    #popcat {
+      width: 300px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="popcat-container">
+    <img id="popcat" src="1.jpg" alt="Popcat" />
+  </div>
+
+  <script>
+    const popcat = document.getElementById('popcat');
+
+    popcat.addEventListener('mousedown', () => {
+      popcat.src = '2.jpg';
+    });
+
+    popcat.addEventListener('mouseup', () => {
+      popcat.src = '1.jpg';
+    });
+
+    popcat.addEventListener('mouseleave', () => {
+      popcat.src = '1.jpg';  // Reset image when mouse leaves
+    });
+  </script>
+
+</body>
+</html>
