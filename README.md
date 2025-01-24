@@ -1,4 +1,6 @@
 # PonziTate
+Saw [this](https://www.fundraiser.com/hackathon) during weekend, just some quickie for joining the part
+Simple Prototype - https://zyairelai.github.io/ponzitate/
 
 ## 1. Pay to play:
 - Users deposit 1 SOL to start clicking. No free riders.
