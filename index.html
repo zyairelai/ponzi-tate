@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popcat Clicker</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f1f1f1;
+      font-family: Arial, sans-serif;
+    }
+
+    #popcat-container {
+      text-align: center;
+    }
+
+    #popcat {
+      width: 300px;
+      cursor: pointer;
+    }
+
+    #score {
+      font-size: 24px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="popcat-container">
+  <img id="popcat" src="1.jpg" alt="Popcat" />
+  <div id="score">Score: 0</div>
+</div>
+
+<script>
+  let score = 0;
+
+  const popcat = document.getElementById('popcat');
+  const scoreElement = document.getElementById('score');
+
+  popcat.addEventListener('mousedown', () => {
+    popcat.src = '2.jpg';
+  });
+
+  popcat.addEventListener('mouseup', () => {
+    popcat.src = '1.jpg';
+    score++;
+    scoreElement.textContent = `Score: ${score}`;
+  });
+
+  popcat.addEventListener('mouseleave', () => {
+    popcat.src = '1.jpg';  // Reset if the mouse leaves the image
+  });
+</script>
+
+</body>
+</html>
