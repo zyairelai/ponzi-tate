@@ -42,32 +42,39 @@
 
 <script>
   let score = 0;
-  let isClicked = false; // Track if the page has been clicked to prevent double-clicking
+  let isClicked = false;
 
   const popcat = document.getElementById('popcat');
   const scoreElement = document.getElementById('score');
 
-  // When the body is clicked, change the image and increase score (but prevent double-click)
-  document.body.addEventListener('mousedown', () => {
+  // Function to handle the "click down" action
+  function clickDown() {
     if (!isClicked) {
       popcat.src = '2.jpg';
       isClicked = true;
     }
-  });
+  }
 
-  document.body.addEventListener('mouseup', () => {
+  // Function to handle the "click up" action
+  function clickUp() {
     if (isClicked) {
       popcat.src = '1.jpg';
       score++;
       scoreElement.textContent = `Score: ${score}`;
-      isClicked = false; // Allow the next click
+      isClicked = false;
     }
-  });
+  }
 
-  // Reset image if the mouse leaves the page
+  // Add event listeners for both mouse and touch events
+  document.body.addEventListener('mousedown', clickDown);
+  document.body.addEventListener('mouseup', clickUp);
+  document.body.addEventListener('touchstart', clickDown);
+  document.body.addEventListener('touchend', clickUp);
+
+  // Reset image if the touch/mouse leaves the page
   document.body.addEventListener('mouseleave', () => {
     popcat.src = '1.jpg';
-    isClicked = false; // Reset the click state
+    isClicked = false;
   });
 </script>
 
