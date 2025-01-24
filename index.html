@@ -3,64 +3,199 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Popcat Clicker</title>
+  <title>PonziTate</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f1f1f1;
       font-family: Arial, sans-serif;
-      cursor: pointer; /* Make the whole page clickable */
-    }
-
-    #popcat-container {
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
     }
 
-    #popcat {
-      width: 300px;
-      pointer-events: none; /* Disable direct interaction with the image */
+    .container {
+      width: 80%;
+      max-width: 800px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #333;
+    }
+
+    .score-container, .timer-container, .leaderboard, .jackpot {
+      margin-top: 20px;
     }
 
     #score {
       font-size: 24px;
-      margin-top: 10px;
+      color: #4CAF50;
+    }
+
+    #timer {
+      font-size: 30px;
+      color: #FF0000;
+    }
+
+    .deposit-section {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .deposit-button {
+      padding: 10px 20px;
+      background-color: #FFC107;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .deposit-button:hover {
+      background-color: #FF9800;
+    }
+
+    .leaderboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      font-size: 18px;
+    }
+
+    .leaderboard div {
+      padding: 10px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      text-align: left;
+    }
+
+    .jackpot {
+      font-size: 24px;
+      color: #FF5722;
+    }
+
+    .leaderboard-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #777;
     }
   </style>
 </head>
 <body>
 
-<div id="popcat-container">
-  <img id="popcat" src="1.jpg" alt="Popcat" />
-  <div id="score">Score: 0</div>
-</div>
+  <div class="container">
+    <h1>PonziTate Clicker</h1>
+    
+    <div class="score-container">
+      <div id="score">Score: 0</div>
+    </div>
 
-<script>
-  let score = 0;
+    <div class="timer-container">
+      <div id="timer">Time Left: 30s</div>
+    </div>
 
-  const popcat = document.getElementById('popcat');
-  const scoreElement = document.getElementById('score');
+    <div class="deposit-section">
+      <button class="deposit-button" id="depositButton">Deposit 1 SOL</button>
+    </div>
 
-  // When any part of the page is clicked, change the image and increase score
-  document.body.addEventListener('mousedown', () => {
-    popcat.src = '2.jpg';
-  });
+    <div class="leaderboard">
+      <div class="leaderboard-title">Top Clickers</div>
+      <div>1. User123 - 100 clicks</div>
+      <div>2. User456 - 90 clicks</div>
+      <div>3. User789 - 80 clicks</div>
+      <div>4. User101 - 70 clicks</div>
+    </div>
 
-  document.body.addEventListener('mouseup', () => {
-    popcat.src = '1.jpg';
-    score++;
-    scoreElement.textContent = `Score: ${score}`;
-  });
+    <div class="jackpot">
+      <div>Ponzi Jackpot: 100 SOL</div>
+    </div>
 
-  // Reset image if mouse leaves the page
-  document.body.addEventListener('mouseleave', () => {
-    popcat.src = '1.jpg';
-  });
-</script>
+    <div class="footer">
+      <p>Game starts once you deposit. Good luck!</p>
+    </div>
+    
+    <a href="tate.html" class="deposit-button">Start Popcat Game</a>
+
+  </div>
+
+  <script>
+    let score = 0;
+    let timeLeft = 30;
+    let isGameActive = false;
+    let timerInterval;
+
+    const scoreElement = document.getElementById('score');
+    const timerElement = document.getElementById('timer');
+    const depositButton = document.getElementById('depositButton');
+
+    const updateTimer = () => {
+      if (timeLeft > 0 && isGameActive) {
+        timeLeft--;
+        timerElement.textContent = `Time Left: ${timeLeft}s`;
+      } else if (timeLeft === 0 && isGameActive) {
+        // Rug the game
+        isGameActive = false;
+        timerElement.textContent = `Game Over!`;
+        alert('The game has been Rugged!');
+        resetGame();
+      }
+    };
+
+    const handleClick = () => {
+      if (isGameActive) {
+        score++;
+        scoreElement.textContent = `Score: ${score}`;
+        // Reset timer on click
+        timeLeft = 30;
+        timerElement.textContent = `Time Left: 30s`;
+      }
+    };
+
+    const startGame = () => {
+      score = 0;
+      timeLeft = 30;
+      scoreElement.textContent = `Score: ${score}`;
+      timerElement.textContent = `Time Left: 30s`;
+      isGameActive = true;
+      if (timerInterval) clearInterval(timerInterval);  // Clear any previous timer
+      timerInterval = setInterval(updateTimer, 1000);
+    };
+
+    const resetGame = () => {
+      score = 0;
+      timeLeft = 30;
+      scoreElement.textContent = `Score: ${score}`;
+      timerElement.textContent = `Time Left: 30s`;
+      depositButton.disabled = false;
+      depositButton.textContent = 'Deposit 1 SOL';
+    };
+
+    depositButton.addEventListener('click', () => {
+      startGame();
+      depositButton.disabled = true;  // Disable button after the first deposit
+      depositButton.textContent = 'Game Started - Good Luck!';
+    });
+  </script>
 
 </body>
 </html>
